@@ -45,70 +45,84 @@
             android:orientation="vertical" >
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card1"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="#00BCD4">
+                app:cardBackgroundColor="#00BCD4"
+                app:cardCornerRadius="10dp">
 
                 <ImageView
                     android:id="@+id/imageView10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/android" />
+                    app:srcCompat="@drawable/img1" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="100dp"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="#00BCD4">
+                app:cardBackgroundColor="#00BCD4"
+                app:cardCornerRadius="10dp">
 
                 <ImageView
                     android:id="@+id/imageView11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/img2" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="100dp"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="#00BCD4">
+                app:cardBackgroundColor="#00BCD4"
+                app:cardCornerRadius="10dp">
 
                 <ImageView
                     android:id="@+id/imageView12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/img3" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="#00BCD4">
+                app:cardBackgroundColor="#00BCD4"
+                app:cardCornerRadius="10dp">
 
                 <ImageView
                     android:id="@+id/imageView13"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/img4" />
 
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="#00BCD4">
+                app:cardBackgroundColor="#00BCD4"
+                app:cardCornerRadius="10dp">
 
                 <ImageView
                     android:id="@+id/imageView14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/img5" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
