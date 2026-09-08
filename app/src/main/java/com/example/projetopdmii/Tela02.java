@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -31,7 +32,8 @@ public class Tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
     private int musica, indiceLista;
     private ArrayList<Playlist> lista;
     private CardView card1, card2, card3, card4, card5;
-    private TextView textoMusicaSeleciona, textoMusicaTocando;
+    private TextView textoMusicaSeleciona, placarTempoAtual, placarTempoRestante;
+    private ImageView imgPreview, imgNext;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -45,9 +47,7 @@ public class Tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
             return insets;
         });
         toolbar = findViewById(R.id.toolbar);
-        //Atribui a toolbar o "poder" de ActionBar
         setSupportActionBar(toolbar);
-        //Habilita o botão de voltar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         seekBar = findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(this);
@@ -72,13 +72,21 @@ public class Tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
         card5 = findViewById(R.id.card5);
         card5.setOnClickListener(this);
         textoMusicaSeleciona = findViewById(R.id.textView);
-        textoMusicaTocando = findViewById(R.id.textView2);
 
+        imgPreview = findViewById(R.id.imageView);
+        imgPreview.setOnClickListener(this);
+        imgNext = findViewById(R.id.imageView2);
+        imgNext.setOnClickListener(this);
 
-
-
-
-
+        placarTempoAtual = findViewById(R.id.textView3);
+        placarTempoRestante = findViewById(R.id.textView4);
+    }
+    public String formatarTempo(int tempo){
+        int segundos = tempo/1000;
+        int minutos = segundos/60;
+        segundos = segundos%60;
+        String tempoFormatado = String.format("%02d:%02d", minutos, segundos);
+        return tempoFormatado;
     }
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -86,25 +94,13 @@ public class Tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
             finish();
         }
         if(id == R.id.id001){
-            if(mediaPlayer == null){
-                mediaPlayer = MediaPlayer.create(this,musica);
-                textoMusicaTocando.setText("Música tocando: "+lista.get(indiceLista).getNome());
-                mediaPlayer.setOnCompletionListener(this);
-                seekBar.setMax(mediaPlayer.getDuration());
-                handler.post(this);
-                mediaPlayer.start();
-            }else if(!mediaPlayer.isPlaying()){
-                mediaPlayer.start();
-            }
+           play();
         }
         if(id == R.id.id003){
-            if(mediaPlayer != null){
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                mediaPlayer=null;
-            }
+            stop();
         }
         if(id == R.id.id002){
+            //pause
             if(mediaPlayer!=null && mediaPlayer.isPlaying()){
                 mediaPlayer.pause();
             }
@@ -119,9 +115,17 @@ public class Tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
+        handler.removeCallbacks(this);
         mediaPlayer.release();
-        mediaPlayer = null;
+        this.mediaPlayer = null;
         seekBar.setProgress(0);
+        indiceLista++;
+        if(indiceLista >= lista.size()){
+            indiceLista = 0;
+        }
+        textoMusicaSeleciona.setText("Música selecionada: "+lista.get(indiceLista).getNome());
+        stop();
+        play();
     }
 
     @Override
@@ -143,6 +147,12 @@ public class Tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
     public void run() {
         if(mediaPlayer!= null)
         {
+            int tempoAtual = mediaPlayer.getCurrentPosition();
+            int duracao = mediaPlayer.getDuration();
+            int tempoRestante = duracao - tempoAtual;
+            placarTempoAtual.setText(formatarTempo(tempoAtual));
+            placarTempoRestante.setText("-"+ formatarTempo(tempoRestante));
+
             seekBar.setProgress(mediaPlayer.getCurrentPosition());
             handler.postDelayed(this, 1000);
         }
@@ -180,6 +190,49 @@ public class Tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
             indiceLista = 4;
             textoMusicaSeleciona.setText("Música selecionada: "+lista.get(indiceLista).getNome());
             musica = lista.get(indiceLista).getMusica();
+        }
+        if(view == imgPreview){
+            indiceLista--;
+            if(indiceLista <0){
+                indiceLista = lista.size()-1;
+            }
+            textoMusicaSeleciona.setText("Música selecionada: "+lista.get(indiceLista).getNome());
+            stop();
+            play();
+        }
+        if(view == imgNext){
+            indiceLista++;
+            if(indiceLista >= lista.size()){
+                indiceLista = 0;
+            }
+            textoMusicaSeleciona.setText("Música selecionada: "+lista.get(indiceLista).getNome());
+            stop();
+            play();
+
+        }
+
+    }
+    public void play(){
+        if(mediaPlayer == null){
+            mediaPlayer = MediaPlayer.create(this,lista.get(indiceLista).getMusica());
+            toolbar.setTitle(lista.get(indiceLista).getNome());
+            int x = indiceLista;
+            x++;
+            toolbar.setSubtitle(Integer.toString(x)+" de " +Integer.toString(lista.size()));
+            mediaPlayer.setOnCompletionListener(this);
+            seekBar.setMax(mediaPlayer.getDuration());
+            handler.post(this);
+            mediaPlayer.start();
+        }else if(!mediaPlayer.isPlaying()){
+            mediaPlayer.start();
+            handler.post(this);
+        }
+    }
+    public void stop(){
+        if(mediaPlayer != null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer=null;
         }
     }
 }
