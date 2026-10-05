@@ -1,6 +1,7 @@
 package com.example.projetopdmii;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class Tela03 extends AppCompatActivity {
     private ViewPager2 viewPager;
     private ArrayList<Slide> lista;
+    private TextView texto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +27,16 @@ public class Tela03 extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        texto = findViewById(R.id.textView5);
         viewPager = findViewById(R.id.viewpager);
         lista = new ArrayList<Slide>();
-        lista.add(new Slide("Slide 1", R.drawable.img1, "texto.."));
-        lista.add(new Slide("Slide 2", R.drawable.img2, "texto.."));
-        lista.add(new Slide("Slide 3", R.drawable.img3, "texto.."));
-        lista.add(new Slide("Slide 4", R.drawable.img4, "texto.."));
-        lista.add(new Slide("Slide 5", R.drawable.img5, "texto.."));
-        SlideAdapter adapter = new SlideAdapter(lista);
+        lista.add(new Slide("Slide 1", R.drawable.img1, "um.."));
+        lista.add(new Slide("Slide 2", R.drawable.img2, "dois.."));
+        lista.add(new Slide("Slide 3", R.drawable.img3, "tres.."));
+        lista.add(new Slide("Slide 4", R.drawable.img4, "quatro.."));
+        lista.add(new Slide("Slide 5", R.drawable.img5, "cinco.."));
+        SlideAdapter adapter = new SlideAdapter(lista, texto);
+
         viewPager.setAdapter(adapter);
     }
 
