@@ -22,7 +22,7 @@ public class Tela03 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tela03);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.iddrawer), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -36,7 +36,13 @@ public class Tela03 extends AppCompatActivity {
         lista.add(new Slide("Slide 4", R.drawable.img4, "quatro.."));
         lista.add(new Slide("Slide 5", R.drawable.img5, "cinco.."));
         SlideAdapter adapter = new SlideAdapter(lista, texto);
-
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                texto.setText(lista.get(position).getTexto());
+            }
+        });
         viewPager.setAdapter(adapter);
     }
 

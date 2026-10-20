@@ -34,7 +34,7 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideHolder> {
     public void onBindViewHolder(@NonNull SlideHolder holder, int position) {
       holder.titulo.setText(lista.get(position).getNome());
       holder.imagem.setImageResource(lista.get(position).getImagem());
-      texto.setText(lista.get(position).getTexto());
+     // texto.setText(lista.get(position).getTexto());
     }
 
     @Override
